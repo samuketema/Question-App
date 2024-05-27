@@ -41,6 +41,7 @@ class  _appState extends State<MyApp>{
                 late  bool ans;
                   setState((){
                      ans = answers[questionNumber];
+                     questionNumber++;
                   });
                   if (ans){
                     print("Correct Answer");
@@ -61,6 +62,7 @@ class  _appState extends State<MyApp>{
                   late bool ans;
                   setState((){
                     ans = answers[questionNumber];
+                    questionNumber++;
                   });
                   if(!ans){
                     print('Correct Answer');
