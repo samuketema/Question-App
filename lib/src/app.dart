@@ -29,7 +29,7 @@ class  _appState extends State<MyApp>{
           children: [
             Expanded(
               flex: 5,
-              child: Text(questions[questionNumber])
+              child: Center(child: Text(questions[questionNumber]))
             ),
             Expanded(
               child:TextButton(
