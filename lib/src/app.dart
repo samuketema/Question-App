@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:question_app/src/questionbank.dart';
+import 'questionbrain.dart';
 
 class MyApp extends StatefulWidget{
   
@@ -8,14 +9,20 @@ class MyApp extends StatefulWidget{
 }
 
 class  _appState extends State<MyApp>{
+QuestionBrain question = new QuestionBrain();
 
-  List<QuestionBank> questions =[
-    QuestionBank(q: 'The capital city of Ethiopia is Addis Abeba' , a: true),
-    QuestionBank(q: 'Ethiopia is one of the smallest country in Africa Continent', a: false),
-    QuestionBank(q: 'The prime minister of Ethiopia is Abiy Ahmed Ali', a: true)
-  ];
-
-  int questionNumber = 0;
+void checkAnswer(bool userAnswer){
+  bool correctAnswer = question.getAnswers(question.questionNumber);
+                  setState((){ 
+                     if (question.questionBank.length -1 > question.questionNumber){
+                     question.questionNumber++;}
+                  });
+                  if (userAnswer == correctAnswer){
+                    print("Correct Answer");
+                  }else{
+                    print('Wrong Answer');
+                  }
+}
   build(BuildContext context){
     return MaterialApp(
       title: 'Question App',
@@ -31,7 +38,7 @@ class  _appState extends State<MyApp>{
           children: [
             Expanded(
               flex: 5,
-              child: Center(child: Text(questions[questionNumber].questionText))
+              child: Center(child: Text(question.getQuestions(question.questionNumber)))
             ),
             Expanded(
               child:TextButton(
@@ -40,17 +47,7 @@ class  _appState extends State<MyApp>{
                   foregroundColor: Colors.white
                 ),
                 onPressed: (){
-                late  bool ans;
-                  setState((){
-                     ans = questions[questionNumber].answer;
-                     if (questions.length -1 > questionNumber){
-                     questionNumber++;}
-                  });
-                  if (ans){
-                    print("Correct Answer");
-                  }else{
-                    print('Wrong Answer');
-                  }
+                checkAnswer(true);
                 },
                 child: Text('True'),
                 ),
@@ -62,17 +59,7 @@ class  _appState extends State<MyApp>{
                   foregroundColor: Colors.white
                 ),
                 onPressed: (){
-                  late bool ans;
-                  setState((){
-                    ans = questions[questionNumber].answer;
-                    if (questions.length-1 > questionNumber){
-                    questionNumber++;}
-                  }); 
-                  if(!ans){
-                    print('Correct Answer');
-                  }else{
-                    print('Incorrect Answer');
-                  }
+                 checkAnswer(false);
                 },
                 child: Text('False'),
                 ),
