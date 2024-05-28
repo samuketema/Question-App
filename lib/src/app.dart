@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:question_app/src/questionbank.dart';
 
 class MyApp extends StatefulWidget{
   
@@ -7,12 +8,13 @@ class MyApp extends StatefulWidget{
 }
 
 class  _appState extends State<MyApp>{
-  List <String> questions = [
-    'The capital city of Ethiopia is Addis Abeba',
-    'Ethiopia is one of the smallest country in Africa Continent',
-    'The prime minister of Ethiopia is Abiy Ahmed Ali'
+
+  List<QuestionBank> questions =[
+    QuestionBank(q: 'The capital city of Ethiopia is Addis Abeba' , a: true),
+    QuestionBank(q: 'Ethiopia is one of the smallest country in Africa Continent', a: false),
+    QuestionBank(q: 'The prime minister of Ethiopia is Abiy Ahmed Ali', a: true)
   ];
-  List<bool> answers =[true,false,true];
+
   int questionNumber = 0;
   build(BuildContext context){
     return MaterialApp(
@@ -29,7 +31,7 @@ class  _appState extends State<MyApp>{
           children: [
             Expanded(
               flex: 5,
-              child: Center(child: Text(questions[questionNumber]))
+              child: Center(child: Text(questions[questionNumber].questionText))
             ),
             Expanded(
               child:TextButton(
@@ -40,8 +42,9 @@ class  _appState extends State<MyApp>{
                 onPressed: (){
                 late  bool ans;
                   setState((){
-                     ans = answers[questionNumber];
-                     questionNumber++;
+                     ans = questions[questionNumber].answer;
+                     if (questions.length -1 > questionNumber){
+                     questionNumber++;}
                   });
                   if (ans){
                     print("Correct Answer");
@@ -61,9 +64,10 @@ class  _appState extends State<MyApp>{
                 onPressed: (){
                   late bool ans;
                   setState((){
-                    ans = answers[questionNumber];
-                    questionNumber++;
-                  });
+                    ans = questions[questionNumber].answer;
+                    if (questions.length-1 > questionNumber){
+                    questionNumber++;}
+                  }); 
                   if(!ans){
                     print('Correct Answer');
                   }else{
